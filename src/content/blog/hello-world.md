@@ -5,7 +5,6 @@ description: 'Discover why multi-cloud complexity stems from the fundamental gov
 category: 'Cloud'
 tags: [AWS, Azure, CloudGovernance, MultiCloud, LandingZone, CloudSecurity]
 ---
-
 While preparing for the **AZ-900** after recently passing the **AWS SAA**, I noticed a fascinating nuance:
 
 In **AWS**, you cannot find a single service that maps **1:1 to Azure Blueprints**.
