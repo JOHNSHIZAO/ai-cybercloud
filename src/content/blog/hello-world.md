@@ -38,7 +38,8 @@ It highlights the fundamental design mindsets of AWS and Azure regarding "Cloud 
 
 ​This distinction mirrors the contrasting corporate cultures of the two cloud giants:
 ​Microsoft emphasizes Integration and Direct Apply.
-​AWS emphasizes Modularity and Extreme Flexibility.
+
+AWS emphasizes Modularity and Extreme Flexibility.
 
 ​From a Cloud Security perspective, this warrants deeper reflection.
 ​True maturity in cloud security is never about patching defenses after the fact.
