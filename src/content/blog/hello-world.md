@@ -14,6 +14,7 @@ This discrepancy reflects more than just product differences.
 
 It highlights the fundamental design mindsets of AWS and Azure regarding **"Cloud Governance."**
 
+
 ---
 
 ## ☁️ Azure: The "Integrated Governance" Mindset
@@ -28,6 +29,7 @@ It tends to package multiple governance primitives into a **single, repeatable d
 - **Compliance Baseline** (Security Standards)
 
 > 💡 "The platform prepares a complete governance framework for you to apply directly."
+
 
 ---
 
@@ -44,6 +46,7 @@ Instead of a single wrapper, AWS achieves a highly **modular Governance Architec
 - **CloudFormation** (Infrastructure as Code)
 
 **AWS emphasizes Modularity and Extreme Flexibility.**
+
 
 ---
 
@@ -71,6 +74,7 @@ Instead, it lies in the heavy **switching cost** between different governance mo
 Same cloud goals. Different governance philosophy.
 
 And that’s where **real multi-cloud complexity** begins.
+
 
 ![1779938007393.png](https://github.com/user-attachments/assets/7e943338-87b0-4345-bf28-e21b5454fd62)
 
