@@ -71,3 +71,6 @@ This explains why the greatest hurdle in **Multi-cloud** is rarely the technical
 Instead, it lies in the heavy **switching cost** between different governance models, permission architectures, compliance logics, and **Landing Zone mindsets**.
 
 And that’s where **real multi-cloud complexity** begins.
+
+![1779938007393.png](https://github.com/user-attachments/assets/7e943338-87b0-4345-bf28-e21b5454fd62)
+
