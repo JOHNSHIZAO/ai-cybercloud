@@ -1,0 +1,49 @@
+---
+// src/components/Search.astro
+---
+
+<div id="search" class="w-full max-w-2xl mx-auto my-8"></div>
+
+<script is:inline>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    // 動態載入 Pagefind UI
+    if (typeof window !== "undefined") {
+      import('/pagefind/pagefind-ui.js').then(() => {
+        new window.PagefindUI({
+          element: "#search",
+          showImages: false,
+          showSubResults: true,
+          excerptLength: 15
+        });
+      }).catch((e) => {
+        console.log("Pagefind 尚未在開發環境生成，請先執行 build");
+      });
+    }
+  });
+</script>
+
+<style is:global>
+  /* 覆寫 Pagefind 預設樣式，注入純白極簡與科技藍 */
+  :root {
+    --pagefind-ui-primary: #2563EB; /* 焦點藍色 */
+    --pagefind-ui-text: #1F2937;    /* 深灰字體 */
+    --pagefind-ui-background: #FFFFFF;
+    --pagefind-ui-border: #E5E7EB;
+    --pagefind-ui-tag: #EFF6FF;
+    --pagefind-ui-border-radius: 6px;
+    --pagefind-ui-image-border-radius: 8px;
+    --pagefind-ui-image-box-ratio: 3 / 2;
+    --pagefind-ui-font: inherit;
+  }
+  
+  /* 隱藏預設的搜尋按鈕，讓介面更極簡 */
+  .pagefind-ui__search-button {
+    display: none;
+  }
+  
+  .pagefind-ui__search-input {
+    font-weight: 400 !important;
+    border: 1px solid var(--pagefind-ui-border) !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+</style>

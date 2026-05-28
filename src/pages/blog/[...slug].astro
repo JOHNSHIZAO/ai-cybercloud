@@ -1,0 +1,24 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.id }, // 注意：Astro 5.0 用 id 取代 slug
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post); // 必須使用新的 render 函式
+---
+
+<Layout title={post.data.title}>
+  <main class="max-w-3xl mx-auto p-10">
+    <h1 class="text-4xl font-bold">{post.data.title}</h1>
+    <article class="prose mt-8">
+      <Content />
+    </article>
+  </main>
+</Layout>
