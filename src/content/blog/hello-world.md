@@ -1,10 +1,10 @@
 ---
 title: "​📌 The real challenge of Multi-cloud has never been moving workloads.
-It is the shift in "Governance Philosophy."
+It is the shift in 'Governance Philosophy.'"
 date: 2026-05-27
 description: "First test post."
 category: "Cloud"
-tags: ["​AWS", "Azure", "CloudGovernance", "MultiCloud", "LandingZone", "CloudSecurity", "InfrastructureAsCode", "CloudArchitecture", "DevSecOps"]
+tags: ["AWS", "Azure", "CloudGovernance", "MultiCloud", "LandingZone", "CloudSecurity", "InfrastructureAsCode", "CloudArchitect", "DevSecOps"]
 ---
 
 ​While preparing for the AZ-900 after recently passing the AWS SAA, I noticed a fascinating nuance:
