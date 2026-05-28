@@ -1,6 +1,7 @@
 ---
 // 這裡引入你的全域樣式
 import '../styles/global.css';
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
 	title: string;
@@ -21,6 +22,7 @@ const { title } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<title>{title}</title>
+		<Analytics />
 	</head>
 	<body class="bg-white text-gray-900 antialiased"> <slot /> </body>
 </html>
