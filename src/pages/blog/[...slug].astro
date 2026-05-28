@@ -149,7 +149,7 @@ const formatDate = (date: Date) =>
           alert('🚀 Link copied to clipboard! Ready to share.');
         }
       } catch (err) {
-        print('Share action captured');
+        console.log('Share action captured', err);
       }
     });
   </script>
