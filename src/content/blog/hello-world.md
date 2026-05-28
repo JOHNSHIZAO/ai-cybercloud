@@ -1,10 +1,10 @@
 ---
-
-## title: '📌 The Real Challenge of Multi-Cloud: The Shift in Governance Philosophy'
+title: '📌 The Real Challenge of Multi-Cloud: The Shift in Governance Philosophy'
 pubDate: 2026-05-28
-description: 'Discover why multi-cloud complexity stems from the fundamental governance mindsets of AWS and Azure rather than workload migration.'
+description: 'Discover why multi-cloud complexity stems from the fundamental governance mindsets of AWS and Azure.'
 category: 'Cloud'
 tags: [AWS, Azure, CloudGovernance, MultiCloud, LandingZone, CloudSecurity]
+---
 
 While preparing for the **AZ-900** after recently passing the **AWS SAA**, I noticed a fascinating nuance:
 
@@ -13,8 +13,6 @@ In AWS, you cannot find a single service that maps **1:1 to Azure Blueprints**.
 This discrepancy reflects more than just product differences.
 
 It highlights the fundamental design mindsets of AWS and Azure regarding **"Cloud Governance."**
-
----
 
 ## Azure: The "Integrated Governance" Mindset
 
