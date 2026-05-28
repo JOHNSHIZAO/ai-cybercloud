@@ -58,3 +58,5 @@ Different governance philosophy.
 ​And that’s where real multi-cloud complexity begins.
 
 ​#AWS #Azure #CloudGovernance #MultiCloud #LandingZone #CloudSecurity #InfrastructureAsCode #CloudArchitecture #DevSecOps
+
+![1779938007393.png](https://github.com/user-attachments/assets/7e943338-87b0-4345-bf28-e21b5454fd62)
