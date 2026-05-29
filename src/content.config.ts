@@ -11,6 +11,7 @@ const blog = defineCollection({
     description: z.string().optional(),
     category: z.string().default('Cloud'),
     tags: z.array(z.string()).default([]),
+    image: z.string().optional(), // ✅ 新增這行：允許每篇文章夾帶一張縮圖網址
   }),
 });
 
