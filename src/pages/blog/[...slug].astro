@@ -78,8 +78,8 @@ const formatDate = (date: Date) =>
         <div class="flex items-center gap-2 text-blue-600 text-sm font-semibold tracking-wider uppercase mb-1">
           <span class="h-2 w-2 rounded-full bg-blue-600"></span> Recommended
         </div>
-        <h2 id="recommended-title" class="text-2xl font-bold text-slate-900">你可能也喜歡</h2>
-        <p class="text-sm text-slate-500 mt-1">為你精選 3 篇值得延伸閱讀的內容</p>
+        <h2 id="recommended-title" class="text-2xl font-bold text-slate-900">You Might Also Like</h2>
+        <p class="text-sm text-slate-500 mt-1">Curated nodes for further exploration</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -106,7 +106,7 @@ const formatDate = (date: Date) =>
             </p>
             
             <a href={`/blog/${rPost.id}/`} class="mt-4 flex items-center gap-1.5 text-xs font-bold text-blue-600 group-hover:underline">
-              » 閱讀文章
+              » Read Article
             </a>
           </div>
         ))}
@@ -156,14 +156,12 @@ const formatDate = (date: Date) =>
 </Layout>
 
 <style is:global>
-   /* 1. 撐開水平分隔線（---）的縱向間距 (已將留白從 5rem 減半為 2.5rem) */
   .custom-prose hr {
     margin-top: 2.5rem !important;
     margin-bottom: 2.5rem !important;
-    border-color: #e2e8f0 !important; /* 稍微加深一點點線條顏色，讓它在縮小間距後依然清晰 */
+    border-color: #e2e8f0 !important; 
   }
 
-  /* 2. 放大標題上方的消極空間，建立清晰的閱讀段落 */
   .custom-prose h2 {
     margin-top: 4.5rem !important;
     margin-bottom: 1.75rem !important;
@@ -177,14 +175,12 @@ const formatDate = (date: Date) =>
     color: #1e293b !important;
   }
 
-  /* 3. 調校段落內文的行高與底部間距，杜絕文字黏稠 */
   .custom-prose p {
     margin-bottom: 2.25rem !important;
-    line-height: 2 !important; /* 放大字距行高 */
+    line-height: 2 !important; 
     color: #334155 !important;
   }
 
-  /* 4. 針對條列式清單進行縱向舒緩 */
   .custom-prose ul, .custom-prose ol {
     margin-top: 1.5rem !important;
     margin-bottom: 2.25rem !important;
