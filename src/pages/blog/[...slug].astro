@@ -156,11 +156,11 @@ const formatDate = (date: Date) =>
 </Layout>
 
 <style is:global>
-  /* 1. 撐開水平分隔線（---）的縱向間距 */
+   /* 1. 撐開水平分隔線（---）的縱向間距 (已將留白從 5rem 減半為 2.5rem) */
   .custom-prose hr {
-    margin-top: 5rem !important;
-    margin-bottom: 5rem !important;
-    border-color: #f1f5f9 !important; /* 採用輕量 Slate-100 線條 */
+    margin-top: 2.5rem !important;
+    margin-bottom: 2.5rem !important;
+    border-color: #e2e8f0 !important; /* 稍微加深一點點線條顏色，讓它在縮小間距後依然清晰 */
   }
 
   /* 2. 放大標題上方的消極空間，建立清晰的閱讀段落 */
