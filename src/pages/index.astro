@@ -18,7 +18,8 @@ const posts = (await getCollection('blog'))
     if (!thumbImage || thumbImage.includes('[Insert image') || thumbImage.trim() === '') {
       // 透過 Regex 掃描 markdown 原始碼，抓取第一個 ![]() 內的網址
       const match = post.body?.match(/!\[.*?\]\((.*?)\)/);
-      thumbImage = match ? match[1] : null;
+      // ✅ 修正點：將 null 改為 undefined，完美對齊 Astro 的型別定義
+      thumbImage = match ? match[1] : undefined;
     }
 
     return {
