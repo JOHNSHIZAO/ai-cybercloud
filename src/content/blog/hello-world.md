@@ -4,6 +4,7 @@ pubDate: 2026-05-28
 description: 'Discover why multi-cloud complexity stems from the fundamental governance mindsets of AWS and Azure.'
 category: 'Cloud'
 tags: [AWS, Azure, CloudGovernance, MultiCloud, LandingZone, CloudSecurity]
+image: '[![1779938007393.png](https://github.com/user-attachments/assets/7e943338-87b0-4345-bf28-e21b5454fd62)]'
 ---
 While preparing for the **AZ-900** after recently passing the **AWS SAA**, I noticed a fascinating nuance:
 
@@ -73,7 +74,4 @@ Instead, it lies in the heavy **switching cost** between different governance mo
 Same cloud goals. Different governance philosophy.
 
 And that’s where **real multi-cloud complexity** begins.
-
-
-![1779938007393.png](https://github.com/user-attachments/assets/7e943338-87b0-4345-bf28-e21b5454fd62)
 
