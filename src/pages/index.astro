@@ -12,11 +12,21 @@ const posts = (await getCollection('blog'))
     const category = post.data.category ?? 'Cloud';
     const tags = post.data.tags ?? [];
 
+    // 🤖 首圖自動尋標邏輯：
+    let thumbImage = post.data.image;
+    // 如果 image 是空的，或包含預設的 '[Insert image' 提示字串
+    if (!thumbImage || thumbImage.includes('[Insert image') || thumbImage.trim() === '') {
+      // 透過 Regex 掃描 markdown 原始碼，抓取第一個 ![]() 內的網址
+      const match = post.body?.match(/!\[.*?\]\((.*?)\)/);
+      thumbImage = match ? match[1] : null;
+    }
+
     return {
       ...post,
       publishDate,
       category,
       tags,
+      thumbImage, // 輸出最終決定的縮圖網址
       href: `/blog/${post.id}/`,
     };
   })
