@@ -13,9 +13,7 @@ In **AWS**, you cannot find a single service that maps **1:1 to Azure Blueprints
 This discrepancy reflects more than just product differences.
 
 It highlights the fundamental design mindsets of AWS and Azure regarding **"Cloud Governance."**
-
 ---
-
 ## ☁️ Azure: The "Integrated Governance" Mindset
 
 Azure’s legacy **Blueprints** concept embodies an **integrated delivery approach**.
@@ -28,9 +26,7 @@ It tends to package multiple governance primitives into a **single, repeatable d
 - **Compliance Baseline** (Security Standards)
 
 > 💡 "The platform prepares a complete governance framework for you to apply directly."
-
 ---
-
 ## 🧩 AWS: The "Modular Governance" Mindset
 
 Conversely, the **AWS philosophy** takes a completely decentralized route.
@@ -44,9 +40,7 @@ Instead of a single wrapper, AWS achieves a highly **modular Governance Architec
 - **CloudFormation** (Infrastructure as Code)
 
 **AWS emphasizes Modularity and Extreme Flexibility.**
-
 ---
-
 ## 🏢 Corporate Culture & Security Architecture
 
 This technical distinction directly mirrors the contrasting **corporate cultures** of the two cloud giants:
