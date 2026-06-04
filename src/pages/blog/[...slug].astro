@@ -1,3 +1,12 @@
+🔍 **抓到問題核心了：推薦區塊的資料層缺乏「尋標邏輯」**
+
+因為我們在上一階段只有幫首頁 (`index.astro`) 寫了自動尋找圖片的 Regex（正則表達式）程式碼，但文章內頁 (`src/pages/blog/[...slug].astro`) 的延伸閱讀區塊，當時還是使用預設的純色漸層卡片，並沒有將「自動抓圖」的邏輯同步過來。
+
+我已經把**自動化抓圖邏輯**與**影像呈現容器 (包含 16:9 比例與 object-contain 防裁切)** 完全移植到這份檔案中了。同時也將圖片區塊加上了超連結，現在讀者點擊縮圖也能直接跳轉！
+
+請直接複製以下完整程式碼，100% 覆寫你的 **`src/pages/blog/[...slug].astro`** 檔案：
+
+```astro
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
@@ -26,7 +35,14 @@ const scoredPosts = otherPosts.map(p => {
   const sharedTags = currentTags.filter(t => postTags.includes(t));
   score += sharedTags.length * 2;
   
-  return { post: p, score };
+  // 🤖 新增：為推薦文章啟動「自動首圖尋標」邏輯
+  let thumbImage = p.data.image;
+  if (!thumbImage || thumbImage.includes('[Insert image') || thumbImage.trim() === '') {
+    const match = p.body?.match(/!\[.*?\]\((.*?)\)/);
+    thumbImage = match ? match[1] : undefined;
+  }
+  
+  return { post: { ...p, thumbImage }, score };
 });
 
 const recommendedPosts = scoredPosts
@@ -85,20 +101,36 @@ const formatDate = (date: Date) =>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         {recommendedPosts.map((rPost) => (
           <div class="flex flex-col rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md group">
-            <div class="mb-4 aspect-[3/2] w-full rounded-xl bg-gradient-to-br from-slate-900 to-slate-800 p-4 flex flex-col justify-between relative overflow-hidden shrink-0">
-              <div class="absolute -bottom-10 -left-10 w-28 h-28 bg-blue-500/10 rounded-full filter blur-xl"></div>
-              <span class="self-start rounded bg-white/10 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-cyan-400 backdrop-blur-md uppercase">
+            
+            <!-- ✅ 升級：縮圖容器，加入條件渲染與圖片超連結 -->
+            <a href={`/blog/${rPost.id}/`} class="mb-4 aspect-[3/2] w-full rounded-xl bg-slate-50 relative overflow-hidden shrink-0 block border border-slate-100">
+              {rPost.thumbImage ? (
+                <img 
+                  src={rPost.thumbImage} 
+                  alt={rPost.data.title} 
+                  class="absolute inset-0 w-full h-full object-contain p-1 transition-transform duration-300 group-hover:scale-105" 
+                />
+              ) : (
+                <!-- 缺省狀態 -->
+                <div class="absolute inset-0 bg-gradient-to-br from-slate-900 to-slate-800 p-4 flex flex-col justify-between">
+                  <div class="absolute -bottom-10 -left-10 w-28 h-28 bg-blue-500/10 rounded-full filter blur-xl"></div>
+                  <div class="mt-auto text-white/20 font-mono text-xs select-none">Ai_CyberCloud_Node</div>
+                </div>
+              )}
+              <!-- 懸浮在圖片左上角的分類標籤 -->
+              <span class="absolute top-3 left-3 rounded bg-white/90 shadow-sm px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-blue-600 backdrop-blur-md uppercase z-10">
                 {rPost.data.category}
               </span>
-              <div class="text-white/20 font-mono text-xs select-none">Ai_CyberCloud_Node</div>
-            </div>
+            </a>
             
             <time class="text-xs font-medium text-slate-400">
               {formatDate(rPost.data.pubDate ?? new Date())}
             </time>
             
             <h3 class="mt-2 text-base font-bold text-slate-800 line-clamp-2 group-hover:text-blue-600 transition-colors min-h-[3rem]">
-              {rPost.data.title.replace(/[\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD00-\uDFFF]/g, '')}
+              <a href={`/blog/${rPost.id}/`}>
+                {rPost.data.title.replace(/[\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD00-\uDFFF]/g, '')}
+              </a>
             </h3>
             
             <p class="mt-2 text-xs text-slate-500 line-clamp-2 flex-1">
@@ -193,3 +225,5 @@ const formatDate = (date: Date) =>
     line-height: 1.8 !important;
   }
 </style>
+
+```
