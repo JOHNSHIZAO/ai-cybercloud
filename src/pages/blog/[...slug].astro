@@ -1,12 +1,3 @@
-🔍 **抓到問題核心了：推薦區塊的資料層缺乏「尋標邏輯」**
-
-因為我們在上一階段只有幫首頁 (`index.astro`) 寫了自動尋找圖片的 Regex（正則表達式）程式碼，但文章內頁 (`src/pages/blog/[...slug].astro`) 的延伸閱讀區塊，當時還是使用預設的純色漸層卡片，並沒有將「自動抓圖」的邏輯同步過來。
-
-我已經把**自動化抓圖邏輯**與**影像呈現容器 (包含 16:9 比例與 object-contain 防裁切)** 完全移植到這份檔案中了。同時也將圖片區塊加上了超連結，現在讀者點擊縮圖也能直接跳轉！
-
-請直接複製以下完整程式碼，100% 覆寫你的 **`src/pages/blog/[...slug].astro`** 檔案：
-
-```astro
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
@@ -22,7 +13,13 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 
-// 智慧推薦演算法：依據分類與標籤計算關聯度權重
+// 🤖 核心優化：為「當前文章」計算縮圖，並塞給 Pagefind 建立搜尋視覺庫
+let currentThumbImage = post.data.image;
+if (!currentThumbImage || currentThumbImage.includes('[Insert image') || currentThumbImage.trim() === '') {
+  const match = typeof post.body === 'string' ? post.body.match(/!\[.*?\]\((https?:\/\/[^\s)]+)\)/) : null;
+  currentThumbImage = match ? match[1] : undefined;
+}
+
 const allPosts = await getCollection('blog');
 const otherPosts = allPosts.filter(p => p.id !== post.id);
 
@@ -35,10 +32,10 @@ const scoredPosts = otherPosts.map(p => {
   const sharedTags = currentTags.filter(t => postTags.includes(t));
   score += sharedTags.length * 2;
   
-  // 🤖 新增：為推薦文章啟動「自動首圖尋標」邏輯
+  // 🤖 推薦區塊縮圖尋標 (加入 typeof 防呆)
   let thumbImage = p.data.image;
   if (!thumbImage || thumbImage.includes('[Insert image') || thumbImage.trim() === '') {
-    const match = p.body?.match(/!\[.*?\]\((.*?)\)/);
+    const match = typeof p.body === 'string' ? p.body.match(/!\[.*?\]\((https?:\/\/[^\s)]+)\)/) : null;
     thumbImage = match ? match[1] : undefined;
   }
   
@@ -68,6 +65,8 @@ const formatDate = (date: Date) =>
   
   <main class="max-w-3xl mx-auto px-6 py-16 sm:px-8 sm:py-24 relative">
     
+    {currentThumbImage && <img src={currentThumbImage} data-pagefind-meta="image[src]" class="hidden" alt="Thumbnail" />}
+
     <div class="bg-white rounded-3xl p-8 sm:p-14 shadow-sm border border-gray-100">
       <header class="mb-14 border-b border-gray-100 pb-10">
         <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl mb-6 leading-tight">
@@ -84,7 +83,7 @@ const formatDate = (date: Date) =>
         </div>
       </header>
 
-      <article class="custom-prose prose prose-slate prose-lg max-w-none hover:prose-a:text-blue-600 prose-a:transition-colors prose-headings:font-bold prose-img:rounded-2xl">
+      <article data-pagefind-body class="custom-prose prose prose-slate prose-lg max-w-none hover:prose-a:text-blue-600 prose-a:transition-colors prose-headings:font-bold prose-img:rounded-2xl">
         <Content />
       </article>
     </div>
@@ -102,22 +101,15 @@ const formatDate = (date: Date) =>
         {recommendedPosts.map((rPost) => (
           <div class="flex flex-col rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md group">
             
-            <!-- ✅ 升級：縮圖容器，加入條件渲染與圖片超連結 -->
             <a href={`/blog/${rPost.id}/`} class="mb-4 aspect-[3/2] w-full rounded-xl bg-slate-50 relative overflow-hidden shrink-0 block border border-slate-100">
               {rPost.thumbImage ? (
-                <img 
-                  src={rPost.thumbImage} 
-                  alt={rPost.data.title} 
-                  class="absolute inset-0 w-full h-full object-contain p-1 transition-transform duration-300 group-hover:scale-105" 
-                />
+                <img src={rPost.thumbImage} alt={rPost.data.title} class="absolute inset-0 w-full h-full object-contain p-1 transition-transform duration-300 group-hover:scale-105" />
               ) : (
-                <!-- 缺省狀態 -->
                 <div class="absolute inset-0 bg-gradient-to-br from-slate-900 to-slate-800 p-4 flex flex-col justify-between">
                   <div class="absolute -bottom-10 -left-10 w-28 h-28 bg-blue-500/10 rounded-full filter blur-xl"></div>
                   <div class="mt-auto text-white/20 font-mono text-xs select-none">Ai_CyberCloud_Node</div>
                 </div>
               )}
-              <!-- 懸浮在圖片左上角的分類標籤 -->
               <span class="absolute top-3 left-3 rounded bg-white/90 shadow-sm px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-blue-600 backdrop-blur-md uppercase z-10">
                 {rPost.data.category}
               </span>
@@ -193,37 +185,30 @@ const formatDate = (date: Date) =>
     margin-bottom: 2.5rem !important;
     border-color: #e2e8f0 !important; 
   }
-
   .custom-prose h2 {
     margin-top: 4.5rem !important;
     margin-bottom: 1.75rem !important;
     font-weight: 800 !important;
     color: #0f172a !important;
   }
-
   .custom-prose h3 {
     margin-top: 3rem !important;
     margin-bottom: 1.25rem !important;
     color: #1e293b !important;
   }
-
   .custom-prose p {
     margin-bottom: 2.25rem !important;
     line-height: 2 !important; 
     color: #334155 !important;
   }
-
   .custom-prose ul, .custom-prose ol {
     margin-top: 1.5rem !important;
     margin-bottom: 2.25rem !important;
     padding-left: 1.5rem !important;
   }
-
   .custom-prose li {
     margin-top: 1rem !important;
     margin-bottom: 1rem !important;
     line-height: 1.8 !important;
   }
 </style>
-
-```
